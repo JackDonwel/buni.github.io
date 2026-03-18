@@ -11,11 +11,11 @@
     <style>
         :root {
             --primary: #ff9800;
-            --primary-glow: rgba(255, 152, 0, 0.5);
+            --primary-glow: rgba(255, 152, 0, 0.6);
             --secondary: #ff5722;
-            --dark: #080808;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --dark: #050505;
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
         * {
@@ -28,35 +28,39 @@
         body {
             background-color: var(--dark);
             color: #fff;
-            /* Changed to allow scrolling if content is too tall for small screens */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
         }
 
+        /* BRIGHTER HERO BACKGROUND */
         .hero {
             position: relative;
-            flex: 1; /* Takes up all available space, pushing footer down */
+            flex: 1;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1000px;
-            padding: 40px 0;
+            perspective: 1200px;
+            padding: 60px 0;
         }
+
         .hero::before {
             content: "";
             position: absolute;
             inset: 0;
+            /* Brighter gradient, less black overlay */
             background: 
-                linear-gradient(to bottom, rgba(8, 8, 8, 0.4), rgba(8, 8, 8, 0.67)),
+                radial-gradient(circle at 50% 50%, rgba(255, 152, 0, 0.1) 0%, transparent 70%),
+                linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)),
                 url('images/buni001.jpeg') no-repeat;
             background-size: cover;
             background-position: center;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.8; /* Higher opacity for better visibility */
         }
+
         #matrix-canvas {
             position: absolute;
             top: 0;
@@ -64,138 +68,148 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            opacity: 0.15;
+            opacity: 0.25; /* Brighter binary rain */
         }
 
-        .hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 20%, var(--dark) 90%);
-            z-index: 2;
-            pointer-events: none;
-        }
-
+        /* ENHANCED GLASS CARD */
         .glass-card {
             position: relative;
             z-index: 10;
             background: var(--glass);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
             border: 1px solid var(--glass-border);
-            padding: clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px);
+            padding: clamp(40px, 6vw, 70px) clamp(25px, 5vw, 50px);
             border-radius: 40px;
             text-align: center;
-            max-width: 750px;
-            width: 90%;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            max-width: 800px;
+            width: 92%;
+            box-shadow: 
+                0 0 40px rgba(255, 152, 0, 0.1),
+                0 40px 100px rgba(0,0,0,0.6);
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.1s ease-out, border-color 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 152, 0, 0.4);
         }
 
         .logo-main {
-            height: clamp(60px, 10vw, 90px);
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 15px var(--primary-glow));
+            height: clamp(70px, 12vw, 100px);
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
         }
 
         .headline {
-            font-size: clamp(35px, 9vw, 85px);
+            font-size: clamp(40px, 10vw, 95px);
             font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 0.9;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #fff, var(--primary), var(--secondary));
+            letter-spacing: -3px;
+            line-height: 0.85;
+            margin-bottom: 20px;
+            /* Brighter Gradient */
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 70%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
         }
 
         .sub-tag {
-            font-size: clamp(10px, 2vw, 13px);
+            font-size: clamp(11px, 2.5vw, 14px);
             text-transform: uppercase;
-            letter-spacing: clamp(3px, 1vw, 8px);
+            letter-spacing: 10px;
             color: var(--primary);
-            margin-bottom: 30px;
-            font-weight: 700;
-            opacity: 0.9;
+            margin-bottom: 35px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
         }
 
         .cta-phrase {
-            font-size: clamp(16px, 3vw, 20px);
-            color: #ccc;
-            margin-bottom: 20px;
+            font-size: clamp(18px, 3.5vw, 22px);
+            color: #efefef;
+            margin-bottom: 25px;
+            font-weight: 400;
         }
 
         .cta-phrase b {
             color: #fff;
-            border-bottom: 2px solid var(--primary);
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+            font-weight: 900;
         }
 
         .btn-action {
-            padding: 18px clamp(30px, 5vw, 50px);
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            padding: 20px clamp(40px, 7vw, 65px);
+            background: linear-gradient(45deg, var(--primary), #ffa726);
             color: #000;
             text-decoration: none;
-            font-weight: 800;
-            font-size: clamp(14px, 2vw, 18px);
+            font-weight: 900;
+            font-size: clamp(16px, 2.5vw, 20px);
             border-radius: 100px;
             display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(255, 152, 0, 0.4);
             border: none;
             cursor: pointer;
             text-transform: uppercase;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
-        /* --- STYLISH RESPONSIVE FOOTER --- */
+        .btn-action:hover {
+            transform: scale(1.08) translateY(-5px);
+            background: #fff;
+            box-shadow: 0 20px 45px rgba(255, 152, 0, 0.6);
+        }
+
+        /* --- VIBRANT FOOTER --- */
         .partner-footer {
             position: relative;
             z-index: 20;
             width: 100%;
-            padding: 30px 20px;
-            background: linear-gradient(to top, rgba(255,255,255,0.05), transparent);
+            padding: 40px 20px;
+            background: rgba(10, 10, 10, 0.4);
             border-top: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .footer-label {
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--primary);
-            opacity: 0.6;
+            letter-spacing: 5px;
+            color: #fff;
+            font-weight: 700;
         }
 
         .partner-tray {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: clamp(30px, 10vw, 90px);
-            flex-wrap: wrap; /* Logos will wrap instead of shrinking too much */
+            gap: clamp(40px, 12vw, 110px);
+            flex-wrap: wrap;
         }
 
         .partner-logo {
-            height: clamp(50px, 8vw, 80px); /* Responsive size */
-            width: auto;
-            transition: transform 0.3s ease, filter 0.3s ease;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)) grayscale(0.5);
+            height: clamp(60px, 10vw, 90px);
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.9); /* LIGHT BACKGROUND */
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
         }
 
         .partner-logo:hover {
-            transform: scale(1.1) translateY(-5px);
-            filter: drop-shadow(0 10px 20px var(--primary-glow)) grayscale(0);
+            transform: scale(1.15);
+            filter: drop-shadow(0 0 25px var(--primary-glow));
         }
 
         @media (max-width: 480px) {
-            body { overflow-y: auto; } /* Ensure mobile can scroll to footer */
-            .partner-footer { padding: 20px; }
-            .partner-tray { gap: 30px; }
+            .hero { padding: 40px 0; }
+            .partner-footer { padding: 30px 15px; }
+            .partner-tray { gap: 35px; }
         }
     </style>
 </head>
@@ -218,7 +232,7 @@
 </section>
 
 <footer class="partner-footer">
-    <span class="footer-label">In Partnership With</span>
+    <span class="footer-label">Strategic Partners</span>
     <div class="partner-tray">
         <img src="images/costech.jpeg" alt="COSTECH" class="partner-logo">
         <img src="images/dtbi.png" alt="DTBi" class="partner-logo">
@@ -236,29 +250,29 @@
     resize();
 
     const letters = "01";
-    const fontSize = 16;
+    const fontSize = 18; // Bigger binary
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
 
     function drawMatrix() {
-        ctx.fillStyle = "rgba(8, 8, 8, 0.1)";
+        ctx.fillStyle = "rgba(5, 5, 5, 0.15)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "#ff9800";
-        ctx.font = fontSize + "px monospace";
+        ctx.font = `bold ${fontSize}px monospace`;
         for (let i = 0; i < drops.length; i++) {
             const text = letters.charAt(Math.floor(Math.random() * letters.length));
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.98) drops[i] = 0;
             drops[i]++;
         }
     }
-    setInterval(drawMatrix, 50);
+    setInterval(drawMatrix, 60);
 
     const card = document.getElementById('card');
     const hero = document.querySelector('.hero');
     hero.addEventListener('mousemove', (e) => {
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
         card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
     });
     hero.addEventListener('mouseleave', () => {
