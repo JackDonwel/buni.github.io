@@ -94,13 +94,15 @@
       z-index: 1;
     }
     .card {
-      background: linear-gradient(145deg, var(--blue) 0%, var(--blue-dark) 100%);
+      background: linear-gradient(145deg, var(--blue-dark) 0%, var(--black) 100%);
       border-radius: 20px;
       padding: 40px;
       max-width: 400px;
       width: 100%;
-      border: 1px solid var(--gold);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 60px rgba(212,168,67,0.1);
+      border: 2px solid var(--gold);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 80px rgba(212,168,67,0.15), inset 0 1px 0 rgba(212,168,67,0.1);
+      position: relative;
+      z-index: 10;
     }
     .logo {
       text-align: center;
@@ -121,24 +123,27 @@
       font-weight: 700;
       margin-bottom: 8px;
       letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 20px rgba(212,168,67,0.3);
     }
     .logo p {
-      color: var(--gold);
+      color: var(--gold-light);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 3px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
     .divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
       margin: 24px 0;
+      opacity: 0.6;
     }
     .section {
       margin-bottom: 24px;
     }
     .section-title {
-      color: var(--gold);
+      color: var(--gold-light);
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 3px;
@@ -147,6 +152,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
     .section-title::before,
     .section-title::after {
@@ -199,7 +205,7 @@
     }
     .link-info { flex: 1; min-width: 0; }
     .link-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; color: var(--white); }
-    .link-handle { color: var(--gold-light); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+    .link-handle { color: var(--gold-light); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
     .instagram-link:hover { border-color: var(--gold); }
     .linkedin-link:hover { border-color: var(--gold); }
     .instagram-link svg { color: var(--gold); }
@@ -215,13 +221,14 @@
         padding: 24px 20px; 
         border-radius: 16px; 
         max-width: 100%;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 40px rgba(212,168,67,0.08);
+        border-width: 2px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 50px rgba(212,168,67,0.12), inset 0 1px 0 rgba(212,168,67,0.1);
       }
       .logo { margin-bottom: 20px; }
       .logo h1 { font-size: 22px; letter-spacing: 0.5px; }
       .logo p { font-size: 12px; letter-spacing: 2px; }
       .logo::after { width: 40px; margin-top: 12px; }
-      .divider { margin: 16px 0; }
+      .divider { margin: 16px 0; opacity: 0.5; }
       .section { margin-bottom: 16px; }
       .section-title { font-size: 10px; letter-spacing: 2px; margin-bottom: 12px; gap: 6px; }
       .section-title::before, .section-title::after { height: 0.5px; }
@@ -233,7 +240,7 @@
       }
       .link svg { width: 22px; height: 22px; flex-shrink: 0; }
       .link-name { font-size: 14px; }
-      .link-handle { font-size: 11px; white-space: normal; overflow: visible; text-overflow: unset; line-height: 1.3; }
+      .link-handle { font-size: 11px; white-space: normal; overflow: visible; text-overflow: unset; line-height: 1.3; font-weight: 600; }
       .link:hover { transform: none; }
       .link:active { transform: scale(0.98); }
       .link::before { display: none; }
@@ -248,7 +255,7 @@
       .link { padding: 12px 10px; gap: 10px; }
       .link svg { width: 20px; height: 20px; }
       .link-name { font-size: 13px; }
-      .link-handle { font-size: 10px; }
+      .link-handle { font-size: 10px; font-weight: 600; }
     }
 
     @media (prefers-reduced-motion: reduce) {
