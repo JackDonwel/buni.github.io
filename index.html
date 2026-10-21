@@ -1,268 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buni | The Future is Back</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #ff9800;
-            --primary-glow: rgba(255, 152, 0, 0.5);
-            --secondary: #ff5722;
-            --dark: #080808;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: #fff;
-            /* Changed to allow scrolling if content is too tall for small screens */
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-
-        .hero {
-            position: relative;
-            flex: 1; /* Takes up all available space, pushing footer down */
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            perspective: 1000px;
-            padding: 40px 0;
-        }
-        .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: 
-                linear-gradient(to bottom, rgba(8, 8, 8, 0.31), rgba(8, 8, 8, 0.57)),
-                url('images/buni001.jpeg') no-repeat;
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            opacity: 0.6;
-        }
-        #matrix-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            opacity: 0.15;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 20%, var(--dark) 90%);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .glass-card {
-            position: relative;
-            z-index: 10;
-            background: var(--glass);
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            border: 1px solid var(--glass-border);
-            padding: clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px);
-            border-radius: 40px;
-            text-align: center;
-            max-width: 750px;
-            width: 90%;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.32);
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-        }
-
-        .logo-main {
-            height: clamp(60px, 10vw, 90px);
-            margin-bottom: 25px;
-            filter: drop-shadow(0 0 15px var(--primary-glow));
-        }
-
-        .headline {
-            font-size: clamp(35px, 9vw, 85px);
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 0.9;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #fff, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-
-        .sub-tag {
-            font-size: clamp(10px, 2vw, 13px);
-            text-transform: uppercase;
-            letter-spacing: clamp(3px, 1vw, 8px);
-            color: var(--primary);
-            margin-bottom: 30px;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-
-        .cta-phrase {
-            font-size: clamp(16px, 3vw, 20px);
-            color: #ccc;
-            margin-bottom: 20px;
-        }
-
-        .cta-phrase b {
-            color: #fff;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .btn-action {
-            padding: 18px clamp(30px, 5vw, 50px);
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: #000000;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: clamp(14px, 2vw, 18px);
-            border-radius: 100px;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        /* --- STYLISH RESPONSIVE FOOTER --- */
-        .partner-footer {
-            position: relative;
-            z-index: 20;
-            width: 100%;
-            padding: 30px 20px;
-            background: linear-gradient(to top, rgba(231, 220, 117, 0.27), transparent);
-            border-top: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .footer-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--primary);
-            opacity: 0.6;
-        }
-
-        .partner-tray {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(30px, 10vw, 90px);
-            flex-wrap: wrap; /* Logos will wrap instead of shrinking too much */
-        }
-
-        .partner-logo {
-            height: clamp(50px, 8vw, 80px); /* Responsive size */
-            width: auto;
-            transition: transform 0.3s ease, filter 0.3s ease;
-            filter: drop-shadow(0 5px 15px rgba(202, 138, 138, 0.5)) grayscale(0.5);
-        }
-
-        .partner-logo:hover {
-            transform: scale(1.1) translateY(-5px);
-            filter: drop-shadow(0 10px 20px var(--primary-glow)) grayscale(0);
-        }
-
-        @media (max-width: 480px) {
-            body { overflow-y: auto; } /* Ensure mobile can scroll to footer */
-            .partner-footer { padding: 20px; }
-            .partner-tray { gap: 30px; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buni Hub & DTBi - Social Links</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo h1 {
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .logo p {
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      margin: 24px 0;
+    }
+    .section {
+      margin-bottom: 24px;
+    }
+    .section-title {
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.2s ease;
+      margin-bottom: 10px;
+    }
+    .link:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateX(4px);
+    }
+    .link svg { flex-shrink: 0; }
+    .link-info { flex: 1; min-width: 0; }
+    .link-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+    .link-handle { color: rgba(255,255,255,0.4); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .instagram-link:hover { border-left: 3px solid #E1306C; }
+    .linkedin-link:hover { border-left: 3px solid #0A66C2; }
+  </style>
 </head>
 <body>
-
-<section class="hero">
-    <canvas id="matrix-canvas"></canvas>
-
-    <div class="glass-card" id="card">
-        <img src="images/buni.jpeg" alt="Buni Logo" class="logo-main">
-        
-        <h1 class="headline">WE ARE<br>BACK</h1>
-        <p class="sub-tag">CO-WORKING SPACE · MENTORSHIP · STARTUPS SUPPORT</p>
-
-
-        <a href="https://forms.gle/7ic3qf2QNsfZbMay8" class="btn-action">Get Started Now</a>
+  <div class="card">
+    <div class="logo">
+      <h1>Buni Hub & DTBi</h1>
+      <p>Follow us across platforms</p>
     </div>
-</section>
-
-<footer class="partner-footer">
-    <span class="footer-label">In Partnership With</span>
-    <div class="partner-tray">
-        <img src="images/costech.jpeg" alt="COSTECH" class="partner-logo">
-        <img src="images/dtbi.png" alt="DTBi" class="partner-logo">
+    
+    <div class="divider"></div>
+    
+    <div class="section">
+      <div class="section-title">Instagram</div>
+      <a href="https://www.instagram.com/bunihub" target="_blank" rel="noopener" class="link instagram-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="18.5" cy="5.5" r="1.5"/>
+        </svg>
+        <div class="link-info">
+          <div class="link-name">Buni Hub</div>
+          <div class="link-handle">@bunihub</div>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/dtbi" target="_blank" rel="noopener" class="link instagram-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="18.5" cy="5.5" r="1.5"/>
+        </svg>
+        <div class="link-info">
+          <div class="link-name">DTBi</div>
+          <div class="link-handle">@dtbi</div>
+        </div>
+      </a>
     </div>
-</footer>
 
-<script>
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.onresize = resize;
-    resize();
-
-    const letters = "01";
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(8, 8, 8, 0.1)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#ff9800";
-        ctx.font = fontSize + "px monospace";
-        for (let i = 0; i < drops.length; i++) {
-            const text = letters.charAt(Math.floor(Math.random() * letters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        }
-    }
-    setInterval(drawMatrix, 50);
-
-    const card = document.getElementById('card');
-    const hero = document.querySelector('.hero');
-    hero.addEventListener('mousemove', (e) => {
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
-        card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-    });
-    hero.addEventListener('mouseleave', () => {
-        card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-    });
-</script>
-
+    <div class="section">
+      <div class="section-title">LinkedIn</div>
+      <a href="https://www.linkedin.com/company/buni-hub/" target="_blank" rel="noopener" class="link linkedin-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        <div class="link-info">
+          <div class="link-name">Buni Hub</div>
+          <div class="link-handle">company/buni-hub</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/company/dar-teknohama-business-incubator-tz/" target="_blank" rel="noopener" class="link linkedin-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        <div class="link-info">
+          <div class="link-name">Dar Teknohama Business Incubator</div>
+          <div class="link-handle">company/dar-teknohama-business-incubator-tz</div>
+        </div>
+      </a>
+    </div>
+  </div>
 </body>
 </html>
